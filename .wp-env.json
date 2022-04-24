@@ -1,0 +1,14 @@
+
+{
+    "env": {
+        "development": {
+            "port": 8732
+        },
+        "test": {
+            "port": 8733
+        }
+    },
+    "plugins": [
+        "."
+    ]
+}
