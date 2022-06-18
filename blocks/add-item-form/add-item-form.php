@@ -1,17 +1,4 @@
 <?php
-/**
- * Plugin Name:       CBR Simple List
- * Description:       WordPress plugin for adding items (posts) quickly from front end of site.
- * Requires at least: 5.8
- * Requires PHP:      7.0
- * Version:           0.2.0
- * Author:            haszari
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       cbr-simple-list
- *
- * @package           create-block
- */
 
 function cbr_add_item_form_render_block( array $attributes ) : string {
     $class = 'cbr-add-item-form';

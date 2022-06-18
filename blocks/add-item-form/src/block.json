@@ -1,8 +1,8 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "create-block/add-item-form",
-	"version": "0.1.0",
+	"name": "cbr-simple-list/add-item-form",
+	"version": "0.3.0",
 	"title": "Add Item Form",
 	"category": "widgets",
 	"icon": "smiley",
@@ -10,7 +10,7 @@
 	"supports": {
 		"html": false
 	},
-	"textdomain": "add-item-form",
+	"textdomain": "cbr-simple-list",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css"
