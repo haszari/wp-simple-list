@@ -1,8 +1,3 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { render, useState, useEffect } from '@wordpress/element';
@@ -107,7 +102,6 @@ function AddItemForm() {
 }
 
 function showAddItemForm() {
-	console.log('heck & chea');
 	const firstAddForm = document.querySelector( '.cbr-add-item-form' );
 	if ( ! firstAddForm ) {
 		return;
