@@ -5,7 +5,17 @@ import { render, useState, useEffect } from '@wordpress/element';
 import { Autocomplete, Button, Grid, TextField } from '@mui/material';
 
 
-function createNewItemPost( title, tagIDs ) {
+function createNewItemPost(
+	title,
+	tagIDs = [],
+	onSuccess = () => {},
+	onError = () => {}
+) {
+	if ( ! title ) {
+		console.log( 'Skipping - empty title.' );
+		return;
+	}
+
 	apiFetch( {
 		path: '/wp/v2/posts/',
 		method: 'POST',
@@ -16,15 +26,20 @@ function createNewItemPost( title, tagIDs ) {
 		},
 	} ).then( ( res ) => {
 		console.log( res );
+		onSuccess();
+	} ).catch( ( error ) => {
+		console.log( error );
+		onError();
 	} );
 }
 
-function NewItemTags( { allTags = [], onChange = () => {} } ) {
+function NewItemTags( { selectedTags = [], allTags = [], onChange = () => {}, ...props } ) {
 	return (
 		<Autocomplete
 			multiple
 			id="tags-standard"
 			options={allTags}
+			value={selectedTags}
 			getOptionLabel={(option) => option.name}
 			defaultValue={[]}
 			onChange={( event, value ) => {
@@ -37,6 +52,7 @@ function NewItemTags( { allTags = [], onChange = () => {} } ) {
 				label="tags"
 			/>
 			)}
+			{ ...props }
 		/>
 	);
 }
@@ -44,7 +60,9 @@ function NewItemTags( { allTags = [], onChange = () => {} } ) {
 function AddItemForm() {
 	const [title, setTitle] = useState('');
 	const [tagIDs, setTagIDs] = useState([]);
+	const [selectedTags, setSelectedTags] = useState([]);
 	const [availableTags, setAvailableTags] = useState([]);
+	const [uiEnabled, setUiEnabled] = useState( true );
 
 	useEffect(() => {
 		apiFetch( {
@@ -67,6 +85,7 @@ function AddItemForm() {
 				<Grid item xs={12}>
 					<TextField
 						fullWidth
+						disabled={ ! uiEnabled }
 						type="text"
 						placeholder="name"
 						value={title}
@@ -78,8 +97,11 @@ function AddItemForm() {
 				<Grid item xs={10}>
 					<NewItemTags
 						fullWidth
-						allTags={availableTags}
+						disabled={ ! uiEnabled }
+						allTags={ availableTags }
+						selectedTags={ selectedTags }
 						onChange={ ( selectedTags ) => {
+							setSelectedTags( selectedTags );
 							const tagIDs = selectedTags.map( o => o.id );
 							setTagIDs( tagIDs );
 						} }
@@ -91,8 +113,23 @@ function AddItemForm() {
 						variant="contained"
 						type="submit"
 						onClick={ ( e ) => {
+							setUiEnabled( false );
 							e.preventDefault();
-							createNewItemPost( title, tagIDs );
+							createNewItemPost(
+								title,
+								tagIDs,
+								() => {
+									// Success! Clear and re-enable.
+									setTitle('');
+									setTagIDs([]);
+									setSelectedTags( [] );
+									setUiEnabled( true );
+								},
+								() => {
+									// Error! Re-enable.
+									setUiEnabled( true );
+								},
+							);
 						} }
 					>Add</Button>
 				</Grid>
