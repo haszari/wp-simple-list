@@ -24,7 +24,7 @@ import Edit from './edit';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType( 'create-block/add-item-form', {
+registerBlockType( 'cbr-simple-list/add-item-form', {
 	/**
 	 * @see ./edit.js
 	 */
