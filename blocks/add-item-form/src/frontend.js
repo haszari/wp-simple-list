@@ -53,17 +53,14 @@ function AddItemForm() {
 
 	useEffect(() => {
 		apiFetch( {
-			path: '/wp/v2/tags/',
+			// Max out per-page; server limits 100 posts.
+			// This is a reasonable max for typical use cases (<100 tags on site).
+			path: '/wp/v2/tags/&per_page=100',
 		} ).then( ( res ) => {
 			setAvailableTags( res )
 		} );
 	}, [ setAvailableTags ] );
 
-	// coming soon
-// 	<NewItemTags
-// 	   allTags={ [ 'artist', 'musician' ] }
-// 	   selectedTags={ [ 'artist' ] }
-//    />
 	return (
 		<form>
 			<Grid
