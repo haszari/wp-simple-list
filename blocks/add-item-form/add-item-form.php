@@ -22,7 +22,6 @@ function cbr_add_item_form_render_block( array $attributes ) : string {
     <div
         class="<?php echo esc_attr( $class ); ?>"
     >
-        Add form coming soon
     </div>
 
     <?php
@@ -39,6 +38,11 @@ function cbr_add_item_form_block_init() {
 add_action( 'init', 'cbr_add_item_form_block_init' );
 
 function cbr_add_item_form_add_frontend_scripts() {
+
+	// Only render the front-end form for users who can publish posts.
+	if ( ! current_user_can( 'edit_posts' ) || ! current_user_can( 'publish_posts' ) ) {
+		return;
+	}
 
 	// Problem: this file is not built by my wp-env setup
 	//http://localhost:8732/wp-content/plugins/artist-list-app/blocks/add-item-form/build/frontend.js
