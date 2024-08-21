@@ -15,8 +15,8 @@
 		"plugin-zip": "wp-scripts plugin-zip"
 	},
 	"devDependencies": {
-		"@emotion/react": "11.9.3",
-		"@emotion/styled": "11.9.3",
+		"@emotion/react": "11.13.3",
+		"@emotion/styled": "11.13.0",
 		"@mui/material": "5.8.4",
 		"@wordpress/scripts": "23.3.0"
 	},
